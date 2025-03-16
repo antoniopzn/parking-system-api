@@ -11,17 +11,20 @@ export class EstablishmentsService {
     @InjectRepository(Establishment)
     private establishmentRepository: Repository<Establishment>
   ) {}
+
   async create(createEstablishmentDto: CreateEstablishmentDto) {
-    const establishment = await this.establishmentRepository.save(createEstablishmentDto);
+    const establishment = await this.establishmentRepository.create(createEstablishmentDto);
+    return await this.establishmentRepository.save(establishment);
+  }
+
+  async findAll() {
+    const establishment = await this.establishmentRepository.find();
     return establishment;
   }
 
-  findAll() {
-    return `This action returns all establishments`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} establishment`;
+  async findOne(id: string): Promise<Establishment | null> {
+    const establishment = await this.establishmentRepository.findOneBy({ id });
+    return establishment || null;
   }
 
   update(id: number, updateEstablishmentDto: UpdateEstablishmentDto) {

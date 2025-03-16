@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Establishment {
     @PrimaryGeneratedColumn("uuid")
     id: string
@@ -14,11 +15,11 @@ export class Establishment {
     address: string
 
     @Column()
-    phone: number
+    phone: string
 
     @Column()
-    motorcycle_parking_qty: string
+    motorcycle_parking_qty: number
 
     @Column()
-    car_parking_qty: string
+    car_parking_qty: number
 }

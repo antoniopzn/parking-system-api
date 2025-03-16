@@ -1,2 +1,19 @@
-### POST Establishments
+### POST establishments
 POST http://localhost:3000/establishments
+Content-Type: application/json
+
+{
+    "name": "KNX Parking",
+    "cnpj": "15652258000140",
+    "address": "Rua XYZ 800",
+    "phone": 4335326655,
+    "car_parking_qty": 50
+}
+
+
+### GET establishment
+GET http://localhost:3000/establishments/312c3d7f-ecab-4567-a410-ebb8cebc4198
+
+
+### GET all establishments
+GET http://localhost:3000/establishments
