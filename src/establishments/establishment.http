@@ -1,0 +1,2 @@
+### POST Establishments
+POST http://localhost:3000/establishments
