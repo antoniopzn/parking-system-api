@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { CreateEstablishmentDto } from './dto/create-establishment.dto';
 import { UpdateEstablishmentDto } from './dto/update-establishment.dto';
 import { Repository } from 'typeorm';
@@ -13,26 +13,31 @@ export class EstablishmentsService {
   ) {}
 
   async create(createEstablishmentDto: CreateEstablishmentDto) {
-    const establishment = await this.establishmentRepository.create(createEstablishmentDto);
-    return await this.establishmentRepository.save(establishment);
+    try {
+      const establishment = this.establishmentRepository.create(createEstablishmentDto);
+      return await this.establishmentRepository.save(establishment);
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('CNPJ already exists');
+      }
+      throw error;
+    }
   }
 
   async findAll() {
-    const establishment = await this.establishmentRepository.find();
-    return establishment;
+    return await this.establishmentRepository.find();
   }
 
   async findOne(id: string): Promise<Establishment | null> {
-    const establishment = await this.establishmentRepository.findOneBy({ id });
-    return establishment || null;
+    return await this.establishmentRepository.findOneBy({ id }) || null;
   }
 
   async update(id: string, updateEstablishmentDto: UpdateEstablishmentDto) {
-    await this.establishmentRepository.update(id, updateEstablishmentDto)
-    return this.establishmentRepository.findOneBy({ id })
+    await this.establishmentRepository.update(id, updateEstablishmentDto);
+    return this.establishmentRepository.findOneBy({ id });
   }
 
   async remove(id: string) {
-    await this.establishmentRepository.delete(id)
+    await this.establishmentRepository.delete(id);
   }
 }

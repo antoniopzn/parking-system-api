@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from "class-validator"
+import { IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, ValidateIf } from "class-validator"
 
 export class CreateEstablishmentDto {
     @IsString()
@@ -14,7 +14,8 @@ export class CreateEstablishmentDto {
     address: string
     
     @IsOptional()
-    @IsNumber()
+    @ValidateIf(o => o.phone !== null && o.phone !== '')
+    @IsPhoneNumber('BR')
     phone: string
     
     @IsOptional()
