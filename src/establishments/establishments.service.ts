@@ -27,11 +27,12 @@ export class EstablishmentsService {
     return establishment || null;
   }
 
-  update(id: number, updateEstablishmentDto: UpdateEstablishmentDto) {
-    return `This action updates a #${id} establishment`;
+  async update(id: string, updateEstablishmentDto: UpdateEstablishmentDto) {
+    await this.establishmentRepository.update(id, updateEstablishmentDto)
+    return this.establishmentRepository.findOneBy({ id })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} establishment`;
+  async remove(id: string) {
+    await this.establishmentRepository.delete(id)
   }
 }

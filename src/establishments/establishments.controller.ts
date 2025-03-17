@@ -24,11 +24,11 @@ export class EstablishmentsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEstablishmentDto: UpdateEstablishmentDto) {
-    return this.establishmentsService.update(+id, updateEstablishmentDto);
+    return this.establishmentsService.update(id, updateEstablishmentDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.establishmentsService.remove(+id);
+    return this.establishmentsService.remove(id);
   }
 }
