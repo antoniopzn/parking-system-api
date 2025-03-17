@@ -1,0 +1,30 @@
+### POST vehicles
+POST http://localhost:3000/vehicles
+Content-Type: application/json
+
+{
+    "marca": "Chevrolet",
+    "modelo": "Prisma 1.4 LTZ 2018",
+    "cor": "Preto",
+    "placa": "FBI6H48",
+    "tipo": "sedan"
+}
+
+
+### GET vehicles
+GET http://localhost:3000/vehicles/312c3d7f-ecab-4567-a410-ebb8cebc4198
+
+
+### GET all vehicles
+GET http://localhost:3000/vehicles
+
+### PATCH vehicles
+PATCH http://localhost:3000/vehicles/312c3d7f-ecab-4567-a410-ebb8cebc4198
+Content-Type: application/json
+
+{
+    "name": "KNX Parking Ltda"
+}
+
+### DELETE vehicles
+DELETE http://localhost:3000/vehicles/312c3d7f-ecab-4567-a410-ebb8cebc4198
