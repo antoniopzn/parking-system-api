@@ -1,0 +1,12 @@
+### Create Movement
+POST http://localhost:3000/movements
+Content-Type: application/json
+
+{
+    "id_establishment": "7a442075-eb01-46b4-b769-2738cd755c9f",
+    "id_vehicle": "11990057-bdad-4789-933e-86b799cd0c56"
+}
+
+
+### Find movement
+GET http://localhost:3000/movements/b6c7d36f-2fdd-4d4c-821b-895ebf0db04c

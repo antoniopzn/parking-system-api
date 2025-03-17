@@ -19,16 +19,16 @@ export class MovementsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.movementsService.findOne(+id);
+    return this.movementsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMovementDto: UpdateMovementDto) {
-    return this.movementsService.update(+id, updateMovementDto);
+    return this.movementsService.update(id, updateMovementDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.movementsService.remove(+id);
+    return this.movementsService.remove(id);
   }
 }

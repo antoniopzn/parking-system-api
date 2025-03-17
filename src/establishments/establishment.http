@@ -23,7 +23,7 @@ PATCH http://localhost:3000/establishments/7a442075-eb01-46b4-b769-2738cd755c9f
 Content-Type: application/json
 
 {
-    "name": "KNX Parking Ltda"
+    "name": "Tonho's Parking"
 }
 
 ### DELETE establishment
