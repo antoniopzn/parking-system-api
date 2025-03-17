@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Vehicle {
     @PrimaryGeneratedColumn("uuid")
     id: string
@@ -13,8 +14,8 @@ export class Vehicle {
     @Column()
     color: string
 
-    @Column()
-    plate: string
+    @Column({ unique: true })
+    license_plate: string
 
     @Column()
     type: string
