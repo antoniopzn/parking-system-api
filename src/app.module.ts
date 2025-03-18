@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Establishment } from './establishments/entities/establishment.entity';
 import { Vehicle } from './vehicles/entities/vehicle.entity';
 import { Movement } from './movements/entities/movement.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import 'dotenv/config';
 
 @Module({
@@ -21,7 +23,7 @@ import 'dotenv/config';
     entities: [Establishment, Vehicle, Movement],
     synchronize: true
   }),
-  EstablishmentsModule, VehiclesModule, MovementsModule],
+  EstablishmentsModule, VehiclesModule, MovementsModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
