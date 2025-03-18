@@ -109,4 +109,80 @@ export class MovementsService {
   remove(id: string) {
     return `This action removes a #${id} movement`;
   }
+
+  async summary(establishmentId: string) {
+    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+
+    if (!movements.length) {
+      throw new Error('Movements not found');
+    }
+
+    const establishment = await this.establishmentRepository.findOneBy({ id: establishmentId });
+
+    const movementDetails = await Promise.all(movements.map(async (movement) => {
+      const vehicle = await this.vehicleRepository.findOneBy({ id: movement.id_vehicle });
+
+      return {
+        dh_entry: movement.dh_entry,
+        dh_exit: movement.dh_exit,
+        vehicle: {
+          license_plate: vehicle?.license_plate,
+          model: vehicle?.model,
+          color: vehicle?.color,
+        },
+      };
+    }));
+
+    return {
+      establishment: {
+        name: establishment?.name,
+      },
+      movements: movementDetails,
+    };
+  }
+
+  async summaryHour(establishmentId: string) {
+    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+
+    if (!movements.length) {
+      throw new Error('Movements not found');
+    }
+
+    const hourlySummary = movements.reduce((summary, movement) => {
+      const hour = movement.dh_entry.getHours();
+      if (!summary[hour]) {
+        summary[hour] = 0;
+      }
+      summary[hour]++;
+      return summary;
+    }, {});
+
+    return hourlySummary;
+  }
+
+  async report(establishmentId: string) {
+    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+
+    if (!movements.length) {
+      throw new Error('Movements not found');
+    }
+
+    const establishment = await this.establishmentRepository.findOneBy({ id: establishmentId });
+
+    const report = movements.map(movement => ({
+      dh_entry: movement.dh_entry,
+      dh_exit: movement.dh_exit,
+      vehicle: {
+        id: movement.id_vehicle,
+      },
+    }));
+
+    return {
+      establishment: {
+        name: establishment?.name,
+      },
+      report,
+    };
+  }
+
 }

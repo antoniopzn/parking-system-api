@@ -23,3 +23,15 @@ Content-Type: application/json
 {
     "dh_exit": "2025-03-21T16:06:50.000Z"
 }
+
+
+### Summary establishment movements
+GET http://localhost:3000/movements/summary/7a442075-eb01-46b4-b769-2738cd755c9f
+
+
+### Summary establishment per hour
+GET http://localhost:3000/movements/summary/7a442075-eb01-46b4-b769-2738cd755c9f/hour
+
+
+### Report establishment movements
+GET http://localhost:3000/movements/report/7a442075-eb01-46b4-b769-2738cd755c9f
