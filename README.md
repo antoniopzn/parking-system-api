@@ -23,7 +23,7 @@
 
 ## Description
 
-A small API for managing a parking system.
+A small API for managing a parking system for study purposes.
 Made with NodeJS using the NestJS framework.
 
 ## Project setup
