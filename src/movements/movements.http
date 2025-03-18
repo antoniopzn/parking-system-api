@@ -10,3 +10,16 @@ Content-Type: application/json
 
 ### Find movement
 GET http://localhost:3000/movements/b6c7d36f-2fdd-4d4c-821b-895ebf0db04c
+
+
+### All movements
+GET http://localhost:3000/movements
+
+
+### Register exit
+PUT http://localhost:3000/movements/696d67fb-01ce-49dc-9bf6-edafaa8abdb6/exit
+Content-Type: application/json
+
+{
+    "dh_exit": "2025-03-21T16:06:50.000Z"
+}

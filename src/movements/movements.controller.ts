@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { MovementsService } from './movements.service';
 import { CreateMovementDto } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
@@ -22,7 +22,7 @@ export class MovementsController {
     return this.movementsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id/exit')
   update(@Param('id') id: string, @Body() updateMovementDto: UpdateMovementDto) {
     return this.movementsService.update(id, updateMovementDto);
   }

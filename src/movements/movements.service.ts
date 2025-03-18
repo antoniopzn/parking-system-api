@@ -18,8 +18,8 @@ export class MovementsService {
 
     @InjectRepository(Vehicle)
     private vehicleRepository: Repository<Vehicle>,
-  ) {}
-  
+  ) { }
+
   async create(createMovementDto: CreateMovementDto) {
     const vehicle = await this.vehicleRepository.findOneBy({ id: createMovementDto.id_vehicle });
     const establishment = await this.establishmentRepository.findOneBy({ id: createMovementDto.id_establishment });
@@ -42,8 +42,33 @@ export class MovementsService {
     return movement;
   }
 
-  findAll() {
-    return `This action returns all movements`;
+  async findAll() {
+    const movement = await this.movementRepository.find();
+
+    if (!movement) {
+      throw new Error('Movement not found');
+    }
+
+    const movementDetails = await Promise.all(movement.map(async (movement) => {
+      const establishment = await this.establishmentRepository.findOneBy({ id: movement.id_establishment });
+      const vehicle = await this.vehicleRepository.findOneBy({ id: movement.id_vehicle });
+
+      return {
+        id: movement.id,
+        establishment: {
+          name: establishment?.name,
+        },
+        vehicle: {
+          license_plate: vehicle?.license_plate,
+          model: vehicle?.model,
+          color: vehicle?.color,
+        },
+        dh_entry: movement.dh_entry,
+        dh_exit: movement.dh_exit
+      }
+    }));
+
+    return movementDetails;
   }
 
   async findOne(id: string) {
@@ -71,8 +96,14 @@ export class MovementsService {
     }
   }
 
-  update(id: string, updateMovementDto: UpdateMovementDto) {
-    return `This action updates a #${id} movement`;
+  async update(id: string, updateMovementDto: UpdateMovementDto) {
+    const movement = this.movementRepository.create({
+      dh_exit: updateMovementDto.dh_exit || new Date(),
+    });
+
+    await this.movementRepository.update(id, movement);
+
+    return await this.movementRepository.findOneBy({ id });
   }
 
   remove(id: string) {
