@@ -24,6 +24,8 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A small API for managing a parking system.
+Made with NodeJS using the NestJS framework.
 
 ## Project setup
 
