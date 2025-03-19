@@ -8,7 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Establishment } from './establishments/entities/establishment.entity';
 import { Vehicle } from './vehicles/entities/vehicle.entity';
 import { Movement } from './movements/entities/movement.entity';
-import 'dotenv/config';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -16,7 +15,7 @@ import 'dotenv/config';
     host: 'localhost',
     port: 3306,
     username: 'admin',
-    password: process.env.DB_PASSWORD,
+    password: 'P@ss2025',
     database: 'parking',
     entities: [Establishment, Vehicle, Movement],
     synchronize: true
