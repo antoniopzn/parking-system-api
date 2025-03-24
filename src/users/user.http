@@ -1,0 +1,15 @@
+### Create User
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "teste",
+    "password": "testeSenha",
+    "id_establishment": "7a442075-eb01-46b4-b769-2738cd755c9f"
+}
+
+
+### GET Users
+GET http://localhost:3000/users/
+
+94fcb8de-9049-45a8-bb33-f1daa278087a
