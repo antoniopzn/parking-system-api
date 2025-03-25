@@ -13,3 +13,14 @@ Content-Type: application/json
 GET http://localhost:3000/users/
 
 94fcb8de-9049-45a8-bb33-f1daa278087a
+
+
+### GET Token
+POST http://localhost:3000/auth/login
+Authorization:
+Content-Type: application/json
+
+{
+    "username": "teste",
+    "password": "testeSenha"
+}

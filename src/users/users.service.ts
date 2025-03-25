@@ -19,7 +19,7 @@ export class UsersService {
 
     @InjectRepository(Establishment)
     private establishmentRepository: Repository<Establishment>,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     const establishment = await this.establishmentRepository.findOneBy({
@@ -38,12 +38,15 @@ export class UsersService {
     try {
       return await this.userRepository.save(user);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Username already exists');
       }
       throw error;
     }
+  }
+
+  findByUsername(username: string): CreateUserDto | null {
+    return this.userRepository.find(user => user.username === username);
   }
 
   async findAll() {

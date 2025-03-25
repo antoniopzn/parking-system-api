@@ -7,6 +7,7 @@ import { Establishment } from 'src/establishments/entities/establishment.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Establishment])],
+  exports: [UsersService],
   controllers: [UsersController],
   providers: [UsersService],
 })
