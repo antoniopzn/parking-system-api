@@ -12,7 +12,11 @@ import { Establishment } from 'src/establishments/entities/establishment.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Movement, Vehicle, Establishment])],
-  controllers: [MovementsController, VehiclesController, EstablishmentsController],
+  controllers: [
+    MovementsController,
+    VehiclesController,
+    EstablishmentsController,
+  ],
   providers: [MovementsService, VehiclesService, EstablishmentsService],
 })
 export class MovementsModule {}

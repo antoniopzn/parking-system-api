@@ -1,25 +1,25 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Establishment {
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @Column({ unique: true })
-    cnpj: string
+  @Column({ unique: true })
+  cnpj: string;
 
-    @Column()
-    address: string
+  @Column()
+  address: string;
 
-    @Column()
-    phone: string
+  @Column()
+  phone: string;
 
-    @Column()
-    motorcycle_parking_qty: number
+  @Column()
+  motorcycle_parking_qty: number;
 
-    @Column()
-    car_parking_qty: number
+  @Column()
+  car_parking_qty: number;
 }

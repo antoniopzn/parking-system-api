@@ -7,16 +7,19 @@ import { Establishment } from './entities/establishment.entity';
 
 @Injectable()
 export class EstablishmentsService {
-  constructor (
+  constructor(
     @InjectRepository(Establishment)
-    private establishmentRepository: Repository<Establishment>
+    private establishmentRepository: Repository<Establishment>,
   ) {}
 
   async create(createEstablishmentDto: CreateEstablishmentDto) {
     try {
-      const establishment = this.establishmentRepository.create(createEstablishmentDto);
+      const establishment = this.establishmentRepository.create(
+        createEstablishmentDto,
+      );
       return await this.establishmentRepository.save(establishment);
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('CNPJ already exists');
       }
@@ -29,7 +32,7 @@ export class EstablishmentsService {
   }
 
   async findOne(id: string): Promise<Establishment | null> {
-    return await this.establishmentRepository.findOneBy({ id }) || null;
+    return (await this.establishmentRepository.findOneBy({ id })) || null;
   }
 
   async update(id: string, updateEstablishmentDto: UpdateEstablishmentDto) {

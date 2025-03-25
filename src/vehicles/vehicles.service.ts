@@ -9,15 +9,15 @@ import { Vehicle } from './entities/vehicle.entity';
 export class VehiclesService {
   constructor(
     @InjectRepository(Vehicle)
-    private vehicleRepository: Repository<Vehicle>
+    private vehicleRepository: Repository<Vehicle>,
   ) {}
 
   async create(createVehicleDto: CreateVehicleDto) {
     try {
-      const vehicle = await this.vehicleRepository.create(createVehicleDto);
+      const vehicle = this.vehicleRepository.create(createVehicleDto);
       return this.vehicleRepository.save(vehicle);
-    }
-    catch (error) {
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return error;
     }
   }
@@ -27,7 +27,7 @@ export class VehiclesService {
   }
 
   async findOne(id: string): Promise<Vehicle | null> {
-    return await this.vehicleRepository.findOneBy({ id }) || null;
+    return (await this.vehicleRepository.findOneBy({ id })) || null;
   }
 
   async update(id: string, updateVehicleDto: UpdateVehicleDto) {
@@ -35,7 +35,7 @@ export class VehiclesService {
     return await this.vehicleRepository.findOneBy({ id });
   }
 
-  remove(id: string) {
-    this.vehicleRepository.delete(id);
+  async remove(id: string) {
+    await this.vehicleRepository.delete(id);
   }
 }

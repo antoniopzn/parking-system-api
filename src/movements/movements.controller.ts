@@ -23,7 +23,10 @@ export class MovementsController {
   }
 
   @Put(':id/exit')
-  update(@Param('id') id: string, @Body() updateMovementDto: UpdateMovementDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMovementDto: UpdateMovementDto,
+  ) {
     return this.movementsService.update(id, updateMovementDto);
   }
 

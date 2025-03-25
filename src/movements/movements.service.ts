@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateMovementDto } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,11 +18,15 @@ export class MovementsService {
 
     @InjectRepository(Vehicle)
     private vehicleRepository: Repository<Vehicle>,
-  ) { }
+  ) {}
 
   async create(createMovementDto: CreateMovementDto) {
-    const vehicle = await this.vehicleRepository.findOneBy({ id: createMovementDto.id_vehicle });
-    const establishment = await this.establishmentRepository.findOneBy({ id: createMovementDto.id_establishment });
+    const vehicle = await this.vehicleRepository.findOneBy({
+      id: createMovementDto.id_vehicle,
+    });
+    const establishment = await this.establishmentRepository.findOneBy({
+      id: createMovementDto.id_establishment,
+    });
 
     if (!vehicle) {
       throw new Error('Vehicle not found');
@@ -49,24 +53,30 @@ export class MovementsService {
       throw new Error('Movement not found');
     }
 
-    const movementDetails = await Promise.all(movement.map(async (movement) => {
-      const establishment = await this.establishmentRepository.findOneBy({ id: movement.id_establishment });
-      const vehicle = await this.vehicleRepository.findOneBy({ id: movement.id_vehicle });
+    const movementDetails = await Promise.all(
+      movement.map(async (movement) => {
+        const establishment = await this.establishmentRepository.findOneBy({
+          id: movement.id_establishment,
+        });
+        const vehicle = await this.vehicleRepository.findOneBy({
+          id: movement.id_vehicle,
+        });
 
-      return {
-        id: movement.id,
-        establishment: {
-          name: establishment?.name,
-        },
-        vehicle: {
-          license_plate: vehicle?.license_plate,
-          model: vehicle?.model,
-          color: vehicle?.color,
-        },
-        dh_entry: movement.dh_entry,
-        dh_exit: movement.dh_exit
-      }
-    }));
+        return {
+          id: movement.id,
+          establishment: {
+            name: establishment?.name,
+          },
+          vehicle: {
+            license_plate: vehicle?.license_plate,
+            model: vehicle?.model,
+            color: vehicle?.color,
+          },
+          dh_entry: movement.dh_entry,
+          dh_exit: movement.dh_exit,
+        };
+      }),
+    );
 
     return movementDetails;
   }
@@ -78,8 +88,12 @@ export class MovementsService {
       throw new Error('Movement not found');
     }
 
-    const establishment = await this.establishmentRepository.findOneBy({ id: movement.id_establishment });
-    const vehicle = await this.vehicleRepository.findOneBy({ id: movement.id_vehicle });
+    const establishment = await this.establishmentRepository.findOneBy({
+      id: movement.id_establishment,
+    });
+    const vehicle = await this.vehicleRepository.findOneBy({
+      id: movement.id_vehicle,
+    });
 
     return {
       id: movement.id,
@@ -92,8 +106,8 @@ export class MovementsService {
         color: vehicle?.color,
       },
       dh_entry: movement.dh_entry,
-      dh_exit: movement.dh_exit
-    }
+      dh_exit: movement.dh_exit,
+    };
   }
 
   async update(id: string, updateMovementDto: UpdateMovementDto) {
@@ -111,27 +125,35 @@ export class MovementsService {
   }
 
   async summary(establishmentId: string) {
-    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+    const movements = await this.movementRepository.findBy({
+      id_establishment: establishmentId,
+    });
 
     if (!movements.length) {
       throw new Error('Movements not found');
     }
 
-    const establishment = await this.establishmentRepository.findOneBy({ id: establishmentId });
+    const establishment = await this.establishmentRepository.findOneBy({
+      id: establishmentId,
+    });
 
-    const movementDetails = await Promise.all(movements.map(async (movement) => {
-      const vehicle = await this.vehicleRepository.findOneBy({ id: movement.id_vehicle });
+    const movementDetails = await Promise.all(
+      movements.map(async (movement) => {
+        const vehicle = await this.vehicleRepository.findOneBy({
+          id: movement.id_vehicle,
+        });
 
-      return {
-        dh_entry: movement.dh_entry,
-        dh_exit: movement.dh_exit,
-        vehicle: {
-          license_plate: vehicle?.license_plate,
-          model: vehicle?.model,
-          color: vehicle?.color,
-        },
-      };
-    }));
+        return {
+          dh_entry: movement.dh_entry,
+          dh_exit: movement.dh_exit,
+          vehicle: {
+            license_plate: vehicle?.license_plate,
+            model: vehicle?.model,
+            color: vehicle?.color,
+          },
+        };
+      }),
+    );
 
     return {
       establishment: {
@@ -142,7 +164,9 @@ export class MovementsService {
   }
 
   async summaryHour(establishmentId: string) {
-    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+    const movements = await this.movementRepository.findBy({
+      id_establishment: establishmentId,
+    });
 
     if (!movements.length) {
       throw new Error('Movements not found');
@@ -161,15 +185,19 @@ export class MovementsService {
   }
 
   async report(establishmentId: string) {
-    const movements = await this.movementRepository.findBy({ id_establishment: establishmentId });
+    const movements = await this.movementRepository.findBy({
+      id_establishment: establishmentId,
+    });
 
     if (!movements.length) {
       throw new Error('Movements not found');
     }
 
-    const establishment = await this.establishmentRepository.findOneBy({ id: establishmentId });
+    const establishment = await this.establishmentRepository.findOneBy({
+      id: establishmentId,
+    });
 
-    const report = movements.map(movement => ({
+    const report = movements.map((movement) => ({
       dh_entry: movement.dh_entry,
       dh_exit: movement.dh_exit,
       vehicle: {
@@ -184,5 +212,4 @@ export class MovementsService {
       report,
     };
   }
-
 }

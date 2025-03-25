@@ -1,19 +1,19 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Movement {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    id_establishment: string;
+  @Column()
+  id_establishment: string;
 
-    @Column()
-    id_vehicle: string;
+  @Column()
+  id_vehicle: string;
 
-    @Column()
-    dh_entry: Date;
+  @Column()
+  dh_entry: Date;
 
-    @Column({ nullable: true })
-    dh_exit: Date;
+  @Column({ nullable: true })
+  dh_exit: Date;
 }

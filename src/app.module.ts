@@ -13,17 +13,22 @@ import 'dotenv/config';
 import { User } from './users/entities/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'admin',
-    password: process.env.DB_PASSWORD,
-    database: 'parking',
-    entities: [Establishment, Vehicle, Movement, User],
-    synchronize: true
-  }),
-  EstablishmentsModule, VehiclesModule, MovementsModule, UsersModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'admin',
+      password: process.env.DB_PASSWORD,
+      database: 'parking',
+      entities: [Establishment, Vehicle, Movement, User],
+      synchronize: true,
+    }),
+    EstablishmentsModule,
+    VehiclesModule,
+    MovementsModule,
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

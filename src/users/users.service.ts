@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { Establishment } from 'src/establishments/entities/establishment.entity';
 import { Repository } from 'typeorm';
@@ -14,16 +19,17 @@ export class UsersService {
 
     @InjectRepository(Establishment)
     private establishmentRepository: Repository<Establishment>,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
-
-    const establishment = await this.establishmentRepository.findOneBy({ id: createUserDto.id_establishment });
+    const establishment = await this.establishmentRepository.findOneBy({
+      id: createUserDto.id_establishment,
+    });
 
     if (!establishment) {
       throw new NotFoundException('Establishment not found');
     }
-    const user = await this.userRepository.create({
+    const user = this.userRepository.create({
       id_establishment: createUserDto.id_establishment,
       username: createUserDto.username,
       password: hashSync(createUserDto.password, 10),
@@ -32,6 +38,7 @@ export class UsersService {
     try {
       return await this.userRepository.save(user);
     } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Username already exists');
       }
